@@ -5,7 +5,7 @@ import hashlib
 bottle.debug(True)
 app = Bottle()
 
-TOKEN='frank'
+TOKEN='zabbix'
 
 @app.route('/')
 def index():
@@ -17,8 +17,9 @@ def index():
     l = [timestamp, nonce, token]
     l.sort()
     sha1_ret = hashlib.sha1(''.join(l)).hexdigest()
-    return sha1_ret + '!=' + wx_sha1_ret
+    if sha1_ret == wx_sha1_ret:
+        return echostr
 
 
 if __name__ == '__main__':
-    run(app=app, host='localhost', port=8000, reloader=True)
+    run(app=app, host='192.168.201.234', port=8000, reloader=True)
